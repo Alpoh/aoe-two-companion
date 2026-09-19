@@ -80,7 +80,7 @@ npm install react-native-tab-icons  # Opcional para iconos
 
 #### Paso 0.4: Crear punto de entrada simple (App.tsx)
 **Archivo:** `App.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -127,7 +127,7 @@ no se trackeen artefactos de build ni dependencias.
 
 #### Paso 1.1: Crear archivos de pantallas (vacíos)
 **Archivo:** `src/screens/Home/HomeScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -141,7 +141,7 @@ export default function HomeScreen() {
 ```
 
 **Archivo:** `src/screens/Strategies/StrategiesScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -155,7 +155,7 @@ export default function StrategiesScreen() {
 ```
 
 **Archivo:** `src/screens/Calculator/CalculatorScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -170,7 +170,7 @@ export default function CalculatorScreen() {
 
 #### Paso 1.2: Configurar React Navigation (Bottom Tabs)
 **Reemplazar:** `App.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -262,7 +262,7 @@ export default function App() {
 
 #### Paso 2.2: Crear componente BuildOrderCard (reutilizable)
 **Archivo:** `src/components/BuildOrderCard.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
 
 #### Paso 2.3: Actualizar StrategiesScreen para mostrar lista
 **Reemplazar:** `src/screens/Strategies/StrategiesScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import strategies from '../../data/strategies.json';
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
 
 #### Paso 3.1: Crear componente Timer
 **Archivo:** `src/components/Timer.tsx`
-```typescript
+```tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
 
 #### Paso 3.2: Integrar Timer en CalculatorScreen
 **Reemplazar:** `src/screens/Calculator/CalculatorScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Timer from '../../components/Timer';
@@ -576,7 +576,7 @@ export async function isFavorite(civId: string): Promise<boolean> {
 
 #### Paso 4.3: Actualizar BuildOrderCard con botón favorito
 **Reemplazar:** `src/components/BuildOrderCard.tsx`
-```typescript
+```tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { addFavorite, removeFavorite, isFavorite } from '../utils/storage';
@@ -675,7 +675,7 @@ const styles = StyleSheet.create({
 
 #### Paso 4.4: Actualizar StrategiesScreen
 **Reemplazar:** `src/screens/Strategies/StrategiesScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import strategies from '../../data/strategies.json';
@@ -736,7 +736,7 @@ export const colors = {
 
 #### Paso 5.2: Actualizar HomeScreen con intro
 **Reemplazar:** `src/screens/Home/HomeScreen.tsx`
-```typescript
+```tsx
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { colors } from '../../styles/colors';
@@ -813,7 +813,7 @@ const styles = StyleSheet.create({
 
 #### Paso 5.3: Añadir opciones de pantalla mejoradas
 **Reemplazar:** `App.tsx` (solo la parte de Tab.Screen options)
-```typescript
+```tsx
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
