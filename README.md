@@ -4,8 +4,9 @@ App móvil (React Native + Expo) con estrategias de build order para Age of
 Empires 2: un listado por civilización, un timer visual para seguir los
 tiempos de cada build order, y favoritos guardados localmente.
 
-> **Estado:** en desarrollo. Fase 0 (setup) completa; navegación, datos,
-> timer, almacenamiento y pulido de UI (Fases 1-5) todavía no están
+> **Estado:** en desarrollo. Fases 0 (setup) y 1 (navegación con tabs)
+> completas y verificadas en dispositivo real vía Expo Go. Datos mock,
+> timer, almacenamiento y pulido de UI (Fases 2-5) todavía no están
 > implementados. Ver [`docs/PLAN_IMPLEMENTACION_AOE2.md`](docs/PLAN_IMPLEMENTACION_AOE2.md)
 > para el detalle de cada fase y su checklist de éxito.
 
@@ -42,7 +43,7 @@ instalados) — el proyecto apunta a mobile vía Expo Go únicamente.
 ## Estructura del proyecto
 
 ```
-├── App.tsx           # componente raíz
+├── App.tsx           # componente raíz (navegación por tabs)
 ├── src/
 │   ├── screens/       # Home, Strategies, Calculator (una carpeta por tab)
 │   ├── components/    # componentes reutilizables (BuildOrderCard, Timer)

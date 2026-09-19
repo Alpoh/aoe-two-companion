@@ -7,17 +7,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Phase 0 (setup) is done and committed (`baseline.`, `fix code in plan.` on
 `main`): Expo/TypeScript project scaffolded, navigation deps installed,
-`src/{screens,components,data,utils,styles}` created (still empty — Phase 1+
-fills them in), `App.tsx` shows the placeholder screen, `LICENSE` (MIT) and
-this `CLAUDE.md` exist. Phases 1-5 (navigation, mock data, timer, storage,
-polish) are not yet implemented — check `docs/PLAN_IMPLEMENTACION_AOE2.md`'s
-checkboxes and `git log` for current progress before assuming what's done.
+`src/{screens,components,data,utils,styles}` created, `LICENSE` (MIT) and
+this `CLAUDE.md` exist.
+
+Phase 1 (basic navigation) is also done: `src/screens/{Home,Strategies,
+Calculator}/*Screen.tsx` are placeholder screens, `App.tsx` wraps
+`NavigationContainer` + `createBottomTabNavigator` wiring all 3 tabs
+(Inicio/Estrategias/Calculadora), `tsc --noEmit` is clean, and it's been
+verified end-to-end on physical iOS and Android devices via Expo Go (tabs
+render and switch correctly). Not yet committed to git.
+
+Phases 2-5 (mock data, timer, storage, polish) are not yet implemented —
+check `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for
+current progress before assuming what's done.
+
+No Android SDK/`adb` is installed on the dev machine, so `npm run android`
+fails with `spawn adb ENOENT`. Testing happens via Expo Go on physical
+devices (`npm start` + scan QR) instead of local emulators — don't suggest
+installing Android Studio/SDK or a Docker-based Android emulator unless
+asked; Docker was already considered and isn't worth the setup friction over
+Expo Go, and iOS simulation isn't possible in Docker at all (Xcode/macOS
+only).
 
 ### Current on-disk structure
 
 ```
 aoe-two-companion/
-├── App.tsx                  # placeholder screen (replaced in Phase 1)
+├── App.tsx                  # NavigationContainer + bottom-tab navigator (Phase 1)
 ├── app.json                 # Expo config — name/slug still default "expo-scaffold"
 ├── index.ts                 # Expo entry point (registers App)
 ├── tsconfig.json
@@ -29,15 +45,15 @@ aoe-two-companion/
 │                             #   (Android adaptive icon layers), favicon.png (unused, no web build)
 ├── docs/
 │   └── PLAN_IMPLEMENTACION_AOE2.md
-└── src/                      # scaffolded, empty — populated phase by phase
+└── src/                      # populated phase by phase
     ├── screens/
-    │   ├── Home/
-    │   ├── Strategies/
-    │   └── Calculator/
-    ├── components/
-    ├── data/
-    ├── utils/
-    └── styles/
+    │   ├── Home/HomeScreen.tsx          # placeholder, Phase 2+ fills it in
+    │   ├── Strategies/StrategiesScreen.tsx  # placeholder, Phase 2 adds the list
+    │   └── Calculator/CalculatorScreen.tsx  # placeholder, Phase 3 adds the Timer
+    ├── components/    # empty — Phase 2+ (BuildOrderCard, Timer)
+    ├── data/          # empty — Phase 2 (strategies.json)
+    ├── utils/         # empty — Phase 4 (storage.ts)
+    └── styles/        # empty — Phase 5 (colors.ts)
 ```
 
 `app.json`'s `name`/`slug` are still the `create-expo-app` defaults

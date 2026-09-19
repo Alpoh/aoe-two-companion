@@ -206,11 +206,11 @@ export default function App() {
 ```
 
 #### ✅ Criterios de éxito Fase 1:
-- [ ] App muestra 3 tabs en la parte inferior
-- [ ] Cada tab tiene su nombre (Inicio, Estrategias, Calculadora)
-- [ ] Al tocar cada tab, cambia de pantalla
+- [x] App muestra 3 tabs en la parte inferior
+- [x] Cada tab tiene su nombre (Inicio, Estrategias, Calculadora)
+- [x] Al tocar cada tab, cambia de pantalla
 - [ ] Hot reload sigue funcionando
-- [ ] No hay errores en la consola
+- [x] No hay errores en la consola
 
 ---
 
@@ -903,8 +903,8 @@ Fase 0:
 - [x] App abre sin errores (Metro Bundler arranca; falta probar en dispositivo/emulador)
 
 Fase 1:
-- [ ] Navegación entre tabs funciona
-- [ ] Tab names aparecen correctamente
+- [x] Navegación entre tabs funciona
+- [x] Tab names aparecen correctamente
 
 Fase 2:
 - [ ] 3 tarjetas visibles
@@ -940,7 +940,7 @@ Fase 0:
 - [x] LICENSE (MIT)
 
 Fase 1:
-- [ ] App.tsx (actualizado con navegación)
+- [x] App.tsx (actualizado con navegación)
 
 Fase 2:
 - [ ] src/data/strategies.json
