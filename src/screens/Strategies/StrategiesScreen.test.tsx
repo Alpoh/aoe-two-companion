@@ -9,16 +9,16 @@ jest.mock('../../data/strategies.json', () => [
 ]);
 
 jest.mock('../../components/BuildOrderCard', () => {
-  return function MockBuildOrderCard({ civ }: { civ: string }) {
-    return <MockText>{civ}</MockText>;
+  return function MockBuildOrderCard({ id, civ }: { id: string; civ: string }) {
+    return <MockText>{`${id}-${civ}`}</MockText>;
   };
 });
 
 describe('StrategiesScreen', () => {
-  it('renders one BuildOrderCard per strategy from the data module', () => {
+  it('renders one BuildOrderCard per strategy, passing its id and civ', () => {
     render(<StrategiesScreen />);
 
-    expect(screen.getByText('Mock Civ A')).toBeTruthy();
-    expect(screen.getByText('Mock Civ B')).toBeTruthy();
+    expect(screen.getByText('1-Mock Civ A')).toBeTruthy();
+    expect(screen.getByText('2-Mock Civ B')).toBeTruthy();
   });
 });

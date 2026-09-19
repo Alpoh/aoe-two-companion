@@ -1,9 +1,10 @@
 {
   "name": "aoe-two-companion",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^7.19.2",
     "@react-navigation/native": "^7.4.1",
     "expo": "~57.0.24",
@@ -42,7 +43,10 @@
   },
   "private": true,
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ]
   },
   "lint-staged": {
     "*.{ts,tsx}": [

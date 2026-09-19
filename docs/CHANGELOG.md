@@ -7,6 +7,19 @@ All notable changes to this project are documented here. Versions follow
 
 ### Added
 
+- Phase 4: local favorites storage. `src/utils/storage.ts` wraps
+  `@react-native-async-storage/async-storage` (`getFavorites`/`addFavorite`/
+  `removeFavorite`/`isFavorite`, keyed under `@aoe2_favorites`) + tests;
+  `BuildOrderCard` shows a star button (☆/⭐) that toggles a strategy's
+  favorite status and persists it; `StrategiesScreen` now passes each
+  strategy's `id` through.
+
+Version bump to `1.0.5` pending commit alongside this.
+
+## [1.0.4] - 2026-09-19 (commit `721d288` "phase 3.")
+
+### Added
+
 - Phase 3: visual countdown timer. `src/utils/time.ts` (`parseTimeToSeconds`/
   `formatSeconds`, new — not in the original plan template) + tests;
   `src/components/Timer.tsx` (start/pause/reset) + tests using
@@ -20,8 +33,6 @@ All notable changes to this project are documented here. Versions follow
   Root cause was re-parsing a `"mm:ss"` string every tick; fixed by keeping
   the countdown state as a plain number of seconds. Covered by a regression
   test in `Timer.test.tsx`.
-
-Version bump to `1.0.4` pending commit alongside this.
 
 ## [1.0.3] - 2026-09-19 (commit `05426c6` "add prettier.")
 

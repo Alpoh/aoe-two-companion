@@ -726,11 +726,11 @@ const styles = StyleSheet.create({
 ```
 
 #### ✅ Criterios de éxito Fase 4:
-- [ ] Cada estrategia muestra un botón de estrella (☆)
-- [ ] Al tocar la estrella, cambia a ⭐ (llena)
-- [ ] Al tocar nuevamente, vuelve a ☆ (vacía)
-- [ ] Si cierras la app y la abres nuevamente, los favoritos persisten
-- [ ] No hay errores al guardar/cargar
+- [x] Cada estrategia muestra un botón de estrella (☆)
+- [x] Al tocar la estrella, cambia a ⭐ (llena)
+- [x] Al tocar nuevamente, vuelve a ☆ (vacía)
+- [x] Si cierras la app y la abres nuevamente, los favoritos persisten
+- [x] No hay errores al guardar/cargar
 
 ---
 
@@ -936,9 +936,9 @@ Fase 3:
 - [x] Sin lag en animaciones
 
 Fase 4:
-- [ ] Favoritos se guardan
-- [ ] Favoritos persisten al recargar
-- [ ] Sin errores en AsyncStorage
+- [x] Favoritos se guardan
+- [x] Favoritos persisten al recargar
+- [x] Sin errores en AsyncStorage
 
 Fase 5:
 - [ ] UI se ve bien

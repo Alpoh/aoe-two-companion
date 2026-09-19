@@ -1,18 +1,40 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { addFavorite, isFavorite, removeFavorite } from '../utils/storage';
 
 interface BuildOrderCardProps {
+  id: string;
   civ: string;
   strategy: string;
   timing: string;
 }
 
-export default function BuildOrderCard({ civ, strategy, timing }: BuildOrderCardProps) {
+export default function BuildOrderCard({ id, civ, strategy, timing }: BuildOrderCardProps) {
+  const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    isFavorite(id).then(setFavorite);
+  }, [id]);
+
+  const toggleFavorite = async () => {
+    if (favorite) {
+      await removeFavorite(id);
+    } else {
+      await addFavorite(id);
+    }
+    setFavorite(!favorite);
+  };
+
   return (
     <View style={styles.card}>
-      <Text style={styles.civName}>{civ}</Text>
-      <Text style={styles.strategy}>{strategy}</Text>
-      <Text style={styles.timing}>⏱️ {timing}</Text>
+      <View style={styles.content}>
+        <Text style={styles.civName}>{civ}</Text>
+        <Text style={styles.strategy}>{strategy}</Text>
+        <Text style={styles.timing}>⏱️ {timing}</Text>
+      </View>
+      <TouchableOpacity onPress={toggleFavorite} style={styles.starButton}>
+        <Text style={styles.starText}>{favorite ? '⭐' : '☆'}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -30,6 +52,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  content: {
+    flex: 1,
   },
   civName: {
     fontSize: 16,
@@ -46,5 +74,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#999',
     fontStyle: 'italic',
+  },
+  starButton: {
+    padding: 8,
+  },
+  starText: {
+    fontSize: 24,
   },
 });

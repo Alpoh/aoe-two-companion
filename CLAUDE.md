@@ -69,9 +69,23 @@ plan's original template is fixed**, with a regression test
 (`Timer.test.tsx`: "stops exactly at 0:00 and calls onComplete once, with
 no extra tick") — the fix was switching the countdown's internal state from
 a re-parsed `"mm:ss"` string to a plain number of seconds. Version bumped
-to `1.0.4`, not yet committed.
+to `1.0.4`. Committed (`721d288` "phase 3.").
 
-Phases 4-5 (storage, polish) are not yet implemented — check
+Phase 4 (local storage) is done, written test-first per Coding rule 1:
+`src/utils/storage.ts` wraps `@react-native-async-storage/async-storage`
+(`getFavorites`/`addFavorite`/`removeFavorite`/`isFavorite`, keyed under
+`@aoe2_favorites`) + `storage.test.ts`; `BuildOrderCard.tsx` now takes an
+`id` prop and renders a star button (☆/⭐) that calls `isFavorite` on mount
+and toggles via `addFavorite`/`removeFavorite`, covered by
+`BuildOrderCard.test.tsx` (mocks `../utils/storage`); `StrategiesScreen.tsx`
+now passes each strategy's `id` through. Jest's official AsyncStorage mock
+(`@react-native-async-storage/async-storage/jest/async-storage-mock`) is
+wired up via a new `jest.setup.js` + `package.json`'s `jest.setupFiles`, so
+`storage.test.ts` exercises real get/set/remove logic against an in-memory
+store rather than a hand-rolled mock. Version bumped to `1.0.5`, not yet
+committed.
+
+Phase 5 (polish) is not yet implemented — check
 `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for current
 progress before assuming what's done.
 
@@ -94,10 +108,11 @@ aoe-two-companion/
 ├── eslint.config.js         # eslint-config-expo flat config + eslint-config-prettier
 ├── .prettierrc.json         # single quotes, semi, trailing commas, printWidth 100
 ├── .prettierignore          # excludes *.md, .idea, .claude, node_modules, dist
-├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.4(+)
+├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.5(+)
 ├── LICENSE                  # MIT
 ├── CLAUDE.md
 ├── .gitignore                # node_modules, .expo, native dirs, .idea/, etc.
+├── jest.setup.js             # Phase 4: wires the official AsyncStorage jest mock
 ├── .husky/
 │   └── pre-commit            # lint-staged + tsc --noEmit + jest, sources nvm first
 ├── scripts/
@@ -110,18 +125,19 @@ aoe-two-companion/
 └── src/                      # populated phase by phase
     ├── screens/
     │   ├── Home/HomeScreen.tsx          # placeholder, Phase 5 fills it in
-    │   ├── Strategies/StrategiesScreen.tsx      # Phase 2: renders BuildOrderCard list
+    │   ├── Strategies/StrategiesScreen.tsx      # Phase 2: renders BuildOrderCard list, passes id (Phase 4)
     │   │   └── StrategiesScreen.test.tsx        # jest.mock() example
     │   └── Calculator/
     │       ├── CalculatorScreen.tsx      # Phase 3: renders Timer w/ strategies[0].timing
     │       └── CalculatorScreen.test.tsx
     ├── components/
-    │   ├── BuildOrderCard.tsx + .test.tsx  # Phase 2
+    │   ├── BuildOrderCard.tsx + .test.tsx  # Phase 2; Phase 4 added the ☆/⭐ favorite button
     │   └── Timer.tsx + .test.tsx            # Phase 3, off-by-one bug fixed
     ├── data/
     │   └── strategies.json  # Phase 2, 3 mock strategies
     ├── utils/
-    │   └── time.ts + .test.ts  # Phase 3: mm:ss <-> seconds, not in original plan
+    │   ├── time.ts + .test.ts     # Phase 3: mm:ss <-> seconds, not in original plan
+    │   └── storage.ts + .test.ts  # Phase 4: AsyncStorage favorites wrapper
     └── styles/        # empty — Phase 5 (colors.ts)
 ```
 

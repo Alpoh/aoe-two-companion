@@ -9,6 +9,7 @@ export default function StrategiesScreen() {
       {strategies.map((strat) => (
         <BuildOrderCard
           key={strat.id}
+          id={strat.id}
           civ={strat.civ}
           strategy={strat.strategy}
           timing={strat.timing}
