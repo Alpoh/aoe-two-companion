@@ -1,10 +1,27 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import strategies from '../../data/strategies.json';
+import BuildOrderCard from '../../components/BuildOrderCard';
 
 export default function StrategiesScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Strategies</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      {strategies.map((strat) => (
+        <BuildOrderCard
+          key={strat.id}
+          civ={strat.civ}
+          strategy={strat.strategy}
+          timing={strat.timing}
+        />
+      ))}
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 12,
+  },
+});

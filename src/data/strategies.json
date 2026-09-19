@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "civ": "Britons",
+    "strategy": "Feudal Scout Rush",
+    "timing": "14:30",
+    "steps": [
+      "Villagers 4 sheep",
+      "Advance a los 16-17",
+      "Crear barracks",
+      "Scout rush con 3-4 scouts"
+    ]
+  },
+  {
+    "id": "2",
+    "civ": "Franks",
+    "strategy": "Castle Push",
+    "timing": "22:00",
+    "steps": [
+      "Villagers 4 deer + forage",
+      "Avanzar rápido",
+      "Castillo temprano",
+      "Paladines"
+    ]
+  },
+  {
+    "id": "3",
+    "civ": "Aztecs",
+    "strategy": "Archer Mass",
+    "timing": "18:00",
+    "steps": [
+      "Flush arqueado normal",
+      "Muchos arqueadores",
+      "Upgrades armor"
+    ]
+  }
+]

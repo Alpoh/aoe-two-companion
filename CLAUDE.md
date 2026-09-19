@@ -17,9 +17,22 @@ Calculator}/*Screen.tsx` are placeholder screens, `App.tsx` wraps
 verified end-to-end on physical iOS and Android devices via Expo Go (tabs
 render and switch correctly). Not yet committed to git.
 
-Phases 2-5 (mock data, timer, storage, polish) are not yet implemented —
-check `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for
-current progress before assuming what's done.
+Phase 2 (mock data & strategy list) is also done: `src/data/strategies.json`
+(3 mock strategies), `src/components/BuildOrderCard.tsx`, and
+`StrategiesScreen.tsx` renders the list. `tsc --noEmit` is clean; not yet
+confirmed on-device.
+
+Testing infra (TDD, see Coding rules below) was added after Phase 2: `jest`
++ `jest-expo` preset + `@testing-library/react-native` v13 +
+`react-test-renderer` pinned to the exact React version (19.2.3 — later
+majors require react ^19.3.0 and will break the install). `npm test` passes
+with one retrofit test (`BuildOrderCard.test.tsx`). Phase 0-2 code predates
+the TDD rule and isn't otherwise covered; going forward, all new code
+(including the Phase 3 Timer bug fix) must be written test-first.
+
+Phases 3-5 (timer, storage, polish) are not yet implemented — check
+`docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for current
+progress before assuming what's done.
 
 No Android SDK/`adb` is installed on the dev machine, so `npm run android`
 fails with `spawn adb ENOENT`. Testing happens via Expo Go on physical
@@ -67,6 +80,28 @@ per civilization, a visual countdown timer for following build-order timings,
 and locally-persisted favorites.
 
 **Stack:** React Native + Expo + TypeScript + React Navigation (bottom tabs) + AsyncStorage
+
+## Coding rules
+
+These are strict and apply to all code written in this repo from here on,
+regardless of phase:
+
+1. **TDD.** Write the failing test first, then the minimum code to make it
+   pass, then refactor. This applies to any new component, utility, or bug
+   fix — including the known Phase 3 Timer off-by-one bug, which should get
+   a regression test before the fix. Test runner: `jest` (`jest-expo`
+   preset) + `@testing-library/react-native`; run with `npm test`. Test
+   files live next to the code they cover (`Foo.tsx` → `Foo.test.tsx`).
+2. **Clean code, no comments.** Code must be self-explanatory through naming
+   and structure — no exceptions, not even for non-obvious logic; if logic
+   needs explaining, refactor or rename until it doesn't. Do not write `//`
+   or `/* */` comments, docblocks, or commented-out code anywhere in
+   `src/`, `App.tsx`, or test files.
+3. **Version bump per phase.** After finishing and verifying a phase (its
+   checklist in `docs/PLAN_IMPLEMENTACION_AOE2.md` is satisfied), bump the
+   version in `package.json` (patch bump, e.g. `1.0.0` → `1.0.1`) and run
+   `npm install` so `package-lock.json` picks up the new version — do this
+   before committing that phase's work.
 
 ## Implementation plan
 
@@ -116,6 +151,8 @@ npm start               # start Expo dev server (Metro), scan QR with Expo Go
 npm start -- --clear    # start with cache cleared
 npm run android         # start targeting Android
 npm run ios             # start targeting iOS (macOS only)
+npm test                # run the Jest test suite once
+npm run test:watch      # run Jest in watch mode (use during TDD)
 eas build --platform android   # production Android build
 eas build --platform ios       # production iOS build
 ```
