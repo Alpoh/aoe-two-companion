@@ -515,13 +515,27 @@ const styles = StyleSheet.create({
 ```
 
 #### ✅ Criterios de éxito Fase 3:
-- [ ] Timer muestra tiempo inicial "14:30"
-- [ ] Botón "Iniciar" comienza la cuenta regresiva
-- [ ] Tiempo disminuye cada segundo (puedes ver "14:29", "14:28", etc.)
-- [ ] Botón "Pausar" detiene el timer
-- [ ] Botón "Reset" vuelve a "14:30"
-- [ ] Cuando llega a 0, se detiene automáticamente
-- [ ] No hay lag ni consumo excesivo de CPU
+- [x] Timer muestra tiempo inicial "14:30" (tomado de `strategies[0].timing`,
+      no hardcodeado — ver nota abajo)
+- [x] Botón "Iniciar" comienza la cuenta regresiva
+- [x] Tiempo disminuye cada segundo (puedes ver "14:29", "14:28", etc.)
+- [x] Botón "Pausar" detiene el timer
+- [x] Botón "Reset" vuelve a "14:30"
+- [x] Cuando llega a 0, se detiene automáticamente (bug de off-by-one-tick
+      del template original corregido — ver nota abajo)
+- [x] No hay lag ni consumo excesivo de CPU
+
+Verificado con TDD (`Timer.test.tsx`, `time.test.ts`, `CalculatorScreen.test.tsx`
+con `jest.useFakeTimers()`), `tsc --noEmit`, `npm run lint`, `prettier --check`.
+No confirmado explícitamente en pantalla de un dispositivo físico.
+
+**Cambios respecto al template original de este documento:** (1) el estado
+interno ahora es un número de segundos (`src/utils/time.ts` convierte
+`"mm:ss"` ↔ segundos una sola vez, no en cada tick), lo que elimina el bug
+conocido donde el timer tardaba un tick extra en detenerse al llegar a 0;
+(2) `CalculatorScreen` ya no hardcodea `initialTime="14:30"`, sino que usa
+`strategies[0].timing` — deja el Timer conectado a datos reales en vez de
+un valor de ejemplo suelto.
 
 ---
 
@@ -917,9 +931,9 @@ Fase 2:
 - [x] Datos se cargan correctamente
 
 Fase 3:
-- [ ] Timer inicia y cuenta hacia atrás
-- [ ] Pausar/Reset funcionan
-- [ ] Sin lag en animaciones
+- [x] Timer inicia y cuenta hacia atrás
+- [x] Pausar/Reset funcionan
+- [x] Sin lag en animaciones
 
 Fase 4:
 - [ ] Favoritos se guardan
@@ -953,8 +967,11 @@ Fase 2:
 - [x] src/screens/Strategies/StrategiesScreen.tsx (actualizado)
 
 Fase 3:
-- [ ] src/components/Timer.tsx
-- [ ] src/screens/Calculator/CalculatorScreen.tsx (actualizado)
+- [x] src/components/Timer.tsx
+- [x] src/screens/Calculator/CalculatorScreen.tsx (actualizado)
+- [x] src/utils/time.ts (no estaba en el plan original; agregado para
+      centralizar la conversión entre `mm:ss` y segundos, y evitar el bug
+      de off-by-one-tick)
 
 Fase 4:
 - [ ] src/utils/storage.ts

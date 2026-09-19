@@ -7,13 +7,36 @@ All notable changes to this project are documented here. Versions follow
 
 ### Added
 
-- `jest.mock()` example: `StrategiesScreen.test.tsx` mocks `strategies.json`
-  and `BuildOrderCard` to test the screen's rendering logic in isolation.
+- Phase 3: visual countdown timer. `src/utils/time.ts` (`parseTimeToSeconds`/
+  `formatSeconds`, new — not in the original plan template) + tests;
+  `src/components/Timer.tsx` (start/pause/reset) + tests using
+  `jest.useFakeTimers()`; `CalculatorScreen` renders it wired to
+  `strategies[0].timing` instead of a hardcoded value, + a test.
+
+### Fixed
+
+- Timer off-by-one-tick bug from the plan's original template: the
+  countdown no longer takes one extra tick to stop after reaching `0:00`.
+  Root cause was re-parsing a `"mm:ss"` string every tick; fixed by keeping
+  the countdown state as a plain number of seconds. Covered by a regression
+  test in `Timer.test.tsx`.
+
+Version bump to `1.0.4` pending commit alongside this.
+
+## [1.0.3] - 2026-09-19 (commit `05426c6` "add prettier.")
+
+### Added
+
 - Prettier (`.prettierrc.json`, `.prettierignore`) with `eslint-config-prettier`
   wired into ESLint and `lint-staged`; `npm run format`/`format:check` added;
   whole codebase reformatted to a consistent style (no logic changes).
 
-Version bump to `1.0.2` pending commit alongside this.
+## [1.0.2] - 2026-09-19 (commit `b466d78` "phase 2.")
+
+### Added
+
+- `jest.mock()` example: `StrategiesScreen.test.tsx` mocks `strategies.json`
+  and `BuildOrderCard` to test the screen's rendering logic in isolation.
 
 ## [1.0.1] - 2026-09-19 (commit `7e63e51`)
 

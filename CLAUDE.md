@@ -49,15 +49,29 @@ the hook originally failed with `npx: not found` when committing from the
 IDE. Fixed by sourcing `$NVM_DIR/nvm.sh` at the top of `.husky/pre-commit`
 — don't remove that.
 
-All of Phase 2 plus the testing/lint/pre-commit infra is committed in a
-single commit, `7e63e51` ("phase 2."), at version `1.0.1`. **The user often
-commits directly via WebStorm's git UI, not through an assistant session —
-always check `git log`/`git status` fresh rather than trusting a prior
-session's account of what's committed. Also: never run `git commit` or
-`git push` in this repo without the user's explicit go-ahead for that
-specific commit, regardless of how "done" the work looks.**
+Phase 2, the testing/lint/pre-commit infra, and Prettier are all committed
+(`7e63e51`, `b466d78`, `05426c6` "add prettier." — HEAD was at version
+`1.0.3` last checked). **The user often commits directly via WebStorm's git
+UI, not through an assistant session — always check `git log`/`git status`
+fresh rather than trusting a prior session's account of what's committed.
+Also: never run `git commit` or `git push` in this repo without the user's
+explicit go-ahead for that specific commit, regardless of how "done" the
+work looks.**
 
-Phases 3-5 (timer, storage, polish) are not yet implemented — check
+Phase 3 (visual timer) is done, written test-first per Coding rule 1:
+`src/utils/time.ts` (`parseTimeToSeconds`/`formatSeconds`, not in the
+original plan template — added to fix the bug below) + `time.test.ts`;
+`src/components/Timer.tsx` + `Timer.test.tsx` (uses `jest.useFakeTimers()`);
+`CalculatorScreen.tsx` renders the Timer wired to `strategies[0].timing`
+(not a hardcoded `"14:30"` like the plan's template) + a test mocking both
+`strategies.json` and `Timer`. **The known off-by-one-tick bug from the
+plan's original template is fixed**, with a regression test
+(`Timer.test.tsx`: "stops exactly at 0:00 and calls onComplete once, with
+no extra tick") — the fix was switching the countdown's internal state from
+a re-parsed `"mm:ss"` string to a plain number of seconds. Version bumped
+to `1.0.4`, not yet committed.
+
+Phases 4-5 (storage, polish) are not yet implemented — check
 `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for current
 progress before assuming what's done.
 
@@ -80,7 +94,7 @@ aoe-two-companion/
 ├── eslint.config.js         # eslint-config-expo flat config + eslint-config-prettier
 ├── .prettierrc.json         # single quotes, semi, trailing commas, printWidth 100
 ├── .prettierignore          # excludes *.md, .idea, .claude, node_modules, dist
-├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.1(+)
+├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.4(+)
 ├── LICENSE                  # MIT
 ├── CLAUDE.md
 ├── .gitignore                # node_modules, .expo, native dirs, .idea/, etc.
@@ -98,13 +112,16 @@ aoe-two-companion/
     │   ├── Home/HomeScreen.tsx          # placeholder, Phase 5 fills it in
     │   ├── Strategies/StrategiesScreen.tsx      # Phase 2: renders BuildOrderCard list
     │   │   └── StrategiesScreen.test.tsx        # jest.mock() example
-    │   └── Calculator/CalculatorScreen.tsx  # placeholder, Phase 3 adds the Timer
+    │   └── Calculator/
+    │       ├── CalculatorScreen.tsx      # Phase 3: renders Timer w/ strategies[0].timing
+    │       └── CalculatorScreen.test.tsx
     ├── components/
-    │   ├── BuildOrderCard.tsx       # Phase 2
-    │   └── BuildOrderCard.test.tsx  # Phase 2
+    │   ├── BuildOrderCard.tsx + .test.tsx  # Phase 2
+    │   └── Timer.tsx + .test.tsx            # Phase 3, off-by-one bug fixed
     ├── data/
     │   └── strategies.json  # Phase 2, 3 mock strategies
-    ├── utils/         # empty — Phase 4 (storage.ts)
+    ├── utils/
+    │   └── time.ts + .test.ts  # Phase 3: mm:ss <-> seconds, not in original plan
     └── styles/        # empty — Phase 5 (colors.ts)
 ```
 
@@ -127,10 +144,11 @@ regardless of phase:
 
 1. **TDD.** Write the failing test first, then the minimum code to make it
    pass, then refactor. This applies to any new component, utility, or bug
-   fix — including the known Phase 3 Timer off-by-one bug, which should get
-   a regression test before the fix. Test runner: `jest` (`jest-expo`
-   preset) + `@testing-library/react-native`; run with `npm test`. Test
-   files live next to the code they cover (`Foo.tsx` → `Foo.test.tsx`).
+   fix — every future change, no exceptions (Phase 3's Timer, including its
+   now-fixed off-by-one bug, was built this way: see Project status above).
+   Test runner: `jest` (`jest-expo` preset) + `@testing-library/react-native`;
+   run with `npm test`. Test files live next to the code they cover
+   (`Foo.tsx` → `Foo.test.tsx`).
 2. **Clean code, no comments.** Code must be self-explanatory through naming
    and structure — no exceptions, not even for non-obvious logic; if logic
    needs explaining, refactor or rename until it doesn't. Do not write `//`

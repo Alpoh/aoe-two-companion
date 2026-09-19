@@ -1,10 +1,31 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import strategies from '../../data/strategies.json';
+import Timer from '../../components/Timer';
 
 export default function CalculatorScreen() {
+  const [firstStrategy] = strategies;
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Calculator</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Build Order Timer</Text>
+      <Timer initialTime={firstStrategy.timing} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 32,
+    color: '#333',
+  },
+});
