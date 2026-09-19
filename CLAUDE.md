@@ -17,18 +17,39 @@ Calculator}/*Screen.tsx` are placeholder screens, `App.tsx` wraps
 verified end-to-end on physical iOS and Android devices via Expo Go (tabs
 render and switch correctly). Not yet committed to git.
 
-Phase 2 (mock data & strategy list) is also done: `src/data/strategies.json`
-(3 mock strategies), `src/components/BuildOrderCard.tsx`, and
-`StrategiesScreen.tsx` renders the list. `tsc --noEmit` is clean; not yet
-confirmed on-device.
+Phase 2 (mock data & strategy list) is done and committed: `src/data/
+strategies.json` (3 mock strategies), `src/components/BuildOrderCard.tsx`,
+and `StrategiesScreen.tsx` renders the list. Verified via `tsc --noEmit`,
+`npm run lint`, and tests; not explicitly confirmed on a physical device.
 
-Testing infra (TDD, see Coding rules below) was added after Phase 2: `jest`
-+ `jest-expo` preset + `@testing-library/react-native` v13 +
+Testing infra (TDD, see Coding rules below) was added alongside Phase 2:
+`jest` + `jest-expo` preset + `@testing-library/react-native` v13 +
 `react-test-renderer` pinned to the exact React version (19.2.3 — later
-majors require react ^19.3.0 and will break the install). `npm test` passes
-with one retrofit test (`BuildOrderCard.test.tsx`). Phase 0-2 code predates
-the TDD rule and isn't otherwise covered; going forward, all new code
-(including the Phase 3 Timer bug fix) must be written test-first.
+majors require react ^19.3.0 and will break the install). Two tests exist:
+`BuildOrderCard.test.tsx` (retrofit) and `StrategiesScreen.test.tsx` (a
+`jest.mock()` example — mocks `strategies.json` and the `BuildOrderCard`
+child component to test the screen in isolation; note it aliases `Text` to
+`MockText` on import rather than `require()`-ing it inside the factory, to
+satisfy both Jest's mock-hoisting rules and ESLint without a suppression
+comment, which rule 2 below forbids). Phase 0-1 code predates the TDD rule
+and isn't covered.
+
+ESLint (`eslint-config-expo`) and a pre-commit quality gate (`husky` +
+`lint-staged`: `eslint --fix`, the no-comments check, `tsc --noEmit`, full
+test suite) were also added alongside Phase 2 — see Coding rules below.
+**Gotcha already hit once:** Node here is nvm-managed (`~/.nvm`), which
+isn't on the restricted `PATH` GUI git clients (WebStorm) use for hooks, so
+the hook originally failed with `npx: not found` when committing from the
+IDE. Fixed by sourcing `$NVM_DIR/nvm.sh` at the top of `.husky/pre-commit`
+— don't remove that.
+
+All of Phase 2 plus the testing/lint/pre-commit infra is committed in a
+single commit, `7e63e51` ("phase 2."), at version `1.0.1`. **The user often
+commits directly via WebStorm's git UI, not through an assistant session —
+always check `git log`/`git status` fresh rather than trusting a prior
+session's account of what's committed. Also: never run `git commit` or
+`git push` in this repo without the user's explicit go-ahead for that
+specific commit, regardless of how "done" the work looks.**
 
 Phases 3-5 (timer, storage, polish) are not yet implemented — check
 `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and `git log` for current
@@ -49,22 +70,32 @@ aoe-two-companion/
 ├── App.tsx                  # NavigationContainer + bottom-tab navigator (Phase 1)
 ├── app.json                 # Expo config — name/slug still default "expo-scaffold"
 ├── index.ts                 # Expo entry point (registers App)
-├── tsconfig.json
-├── package.json             # name "aoe-two-companion", "license": "MIT"
+├── tsconfig.json            # includes "types": ["jest"] for test globals
+├── eslint.config.js         # eslint-config-expo flat config
+├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.1(+)
 ├── LICENSE                  # MIT
 ├── CLAUDE.md
 ├── .gitignore                # node_modules, .expo, native dirs, .idea/, etc.
+├── .husky/
+│   └── pre-commit            # lint-staged + tsc --noEmit + jest, sources nvm first
+├── scripts/
+│   └── check-no-comments.js  # enforces Coding rule 2 via the TS scanner API
 ├── assets/                  # icon.png (iOS/general), android-icon-*.png
 │                             #   (Android adaptive icon layers), favicon.png (unused, no web build)
 ├── docs/
-│   └── PLAN_IMPLEMENTACION_AOE2.md
+│   ├── PLAN_IMPLEMENTACION_AOE2.md
+│   └── CHANGELOG.md
 └── src/                      # populated phase by phase
     ├── screens/
-    │   ├── Home/HomeScreen.tsx          # placeholder, Phase 2+ fills it in
-    │   ├── Strategies/StrategiesScreen.tsx  # placeholder, Phase 2 adds the list
+    │   ├── Home/HomeScreen.tsx          # placeholder, Phase 5 fills it in
+    │   ├── Strategies/StrategiesScreen.tsx      # Phase 2: renders BuildOrderCard list
+    │   │   └── StrategiesScreen.test.tsx        # jest.mock() example
     │   └── Calculator/CalculatorScreen.tsx  # placeholder, Phase 3 adds the Timer
-    ├── components/    # empty — Phase 2+ (BuildOrderCard, Timer)
-    ├── data/          # empty — Phase 2 (strategies.json)
+    ├── components/
+    │   ├── BuildOrderCard.tsx       # Phase 2
+    │   └── BuildOrderCard.test.tsx  # Phase 2
+    ├── data/
+    │   └── strategies.json  # Phase 2, 3 mock strategies
     ├── utils/         # empty — Phase 4 (storage.ts)
     └── styles/        # empty — Phase 5 (colors.ts)
 ```
@@ -153,12 +184,18 @@ npm run android         # start targeting Android
 npm run ios             # start targeting iOS (macOS only)
 npm test                # run the Jest test suite once
 npm run test:watch      # run Jest in watch mode (use during TDD)
+npm run lint            # ESLint (eslint-config-expo)
 eas build --platform android   # production Android build
 eas build --platform ios       # production iOS build
 ```
 
 Web isn't set up (`react-dom`/`react-native-web` aren't installed) since the
 plan targets mobile via Expo Go only.
+
+## Changelog
+
+`docs/CHANGELOG.md` tracks notable changes per version (Keep a Changelog
+style). Update it alongside the version bump in Coding rule 3.
 
 ## Explicitly out of scope (per the plan)
 

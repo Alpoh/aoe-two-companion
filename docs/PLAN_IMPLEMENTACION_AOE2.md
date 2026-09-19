@@ -348,11 +348,16 @@ const styles = StyleSheet.create({
 ```
 
 #### ✅ Criterios de éxito Fase 2:
-- [ ] Tab "Estrategias" muestra 3 tarjetas (Britons, Franks, Aztecs)
-- [ ] Cada tarjeta tiene: civ name, strategy, timing
-- [ ] Las tarjetas son scrolleables
-- [ ] Las tarjetas se ven bien formateadas
-- [ ] No hay errores de JSON parsing
+- [x] Tab "Estrategias" muestra 3 tarjetas (Britons, Franks, Aztecs)
+- [x] Cada tarjeta tiene: civ name, strategy, timing
+- [x] Las tarjetas son scrolleables
+- [x] Las tarjetas se ven bien formateadas
+- [x] No hay errores de JSON parsing
+
+Verificado vía `tsc --noEmit`, `npm test` (`BuildOrderCard.test.tsx` y
+`StrategiesScreen.test.tsx` con `jest.mock()`) y `npm run lint`; comiteado
+en `7e63e51`. No confirmado explícitamente en pantalla de un dispositivo
+físico (a diferencia de la Fase 1, que sí se vio en Expo Go).
 
 ---
 
@@ -907,9 +912,9 @@ Fase 1:
 - [x] Tab names aparecen correctamente
 
 Fase 2:
-- [ ] 3 tarjetas visibles
-- [ ] Scroll funciona
-- [ ] Datos se cargan correctamente
+- [x] 3 tarjetas visibles
+- [x] Scroll funciona
+- [x] Datos se cargan correctamente
 
 Fase 3:
 - [ ] Timer inicia y cuenta hacia atrás
@@ -933,9 +938,9 @@ Fase 5:
 
 ```
 Fase 0:
-- [ ] src/screens/Home/HomeScreen.tsx
-- [ ] src/screens/Strategies/StrategiesScreen.tsx
-- [ ] src/screens/Calculator/CalculatorScreen.tsx
+- [x] src/screens/Home/HomeScreen.tsx
+- [x] src/screens/Strategies/StrategiesScreen.tsx
+- [x] src/screens/Calculator/CalculatorScreen.tsx
 - [x] CLAUDE.md
 - [x] LICENSE (MIT)
 
@@ -943,9 +948,9 @@ Fase 1:
 - [x] App.tsx (actualizado con navegación)
 
 Fase 2:
-- [ ] src/data/strategies.json
-- [ ] src/components/BuildOrderCard.tsx
-- [ ] src/screens/Strategies/StrategiesScreen.tsx (actualizado)
+- [x] src/data/strategies.json
+- [x] src/components/BuildOrderCard.tsx
+- [x] src/screens/Strategies/StrategiesScreen.tsx (actualizado)
 
 Fase 3:
 - [ ] src/components/Timer.tsx
