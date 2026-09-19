@@ -5,12 +5,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-Phase 0 (setup) is done: Expo/TypeScript project scaffolded, navigation deps
-installed, `src/{screens,components,data,utils,styles}` created, `App.tsx`
-shows the placeholder screen, `LICENSE` (MIT) and this `CLAUDE.md` exist.
-Phases 1-5 (navigation, mock data, timer, storage, polish) are not yet
-implemented — check `docs/PLAN_IMPLEMENTACION_AOE2.md`'s checkboxes and
-`git log` for current progress before assuming what's done.
+Phase 0 (setup) is done and committed (`baseline.`, `fix code in plan.` on
+`main`): Expo/TypeScript project scaffolded, navigation deps installed,
+`src/{screens,components,data,utils,styles}` created (still empty — Phase 1+
+fills them in), `App.tsx` shows the placeholder screen, `LICENSE` (MIT) and
+this `CLAUDE.md` exist. Phases 1-5 (navigation, mock data, timer, storage,
+polish) are not yet implemented — check `docs/PLAN_IMPLEMENTACION_AOE2.md`'s
+checkboxes and `git log` for current progress before assuming what's done.
+
+### Current on-disk structure
+
+```
+aoe-two-companion/
+├── App.tsx                  # placeholder screen (replaced in Phase 1)
+├── app.json                 # Expo config — name/slug still default "expo-scaffold"
+├── index.ts                 # Expo entry point (registers App)
+├── tsconfig.json
+├── package.json             # name "aoe-two-companion", "license": "MIT"
+├── LICENSE                  # MIT
+├── CLAUDE.md
+├── .gitignore                # node_modules, .expo, native dirs, .idea/, etc.
+├── assets/                  # icon.png (iOS/general), android-icon-*.png
+│                             #   (Android adaptive icon layers), favicon.png (unused, no web build)
+├── docs/
+│   └── PLAN_IMPLEMENTACION_AOE2.md
+└── src/                      # scaffolded, empty — populated phase by phase
+    ├── screens/
+    │   ├── Home/
+    │   ├── Strategies/
+    │   └── Calculator/
+    ├── components/
+    ├── data/
+    ├── utils/
+    └── styles/
+```
+
+`app.json`'s `name`/`slug` are still the `create-expo-app` defaults
+(`expo-scaffold`) — renaming them to the project's real name is a pending
+step, not yet assigned to a specific phase in the plan doc.
 
 ## What this project is
 
