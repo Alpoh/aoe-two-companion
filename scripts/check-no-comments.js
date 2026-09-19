@@ -31,7 +31,9 @@ for (const file of files) {
   const ranges = findCommentRanges(sourceText);
   for (const position of ranges) {
     hasComments = true;
-    console.error(`${file}:${lineOf(sourceText, position)}: comments are not allowed (Clean Code rule in CLAUDE.md)`);
+    console.error(
+      `${file}:${lineOf(sourceText, position)}: comments are not allowed (Clean Code rule in CLAUDE.md)`,
+    );
   }
 }
 

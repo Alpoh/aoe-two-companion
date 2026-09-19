@@ -9,7 +9,11 @@ All notable changes to this project are documented here. Versions follow
 
 - `jest.mock()` example: `StrategiesScreen.test.tsx` mocks `strategies.json`
   and `BuildOrderCard` to test the screen's rendering logic in isolation.
-  Version bump to `1.0.2` pending commit alongside this.
+- Prettier (`.prettierrc.json`, `.prettierignore`) with `eslint-config-prettier`
+  wired into ESLint and `lint-staged`; `npm run format`/`format:check` added;
+  whole codebase reformatted to a consistent style (no logic changes).
+
+Version bump to `1.0.2` pending commit alongside this.
 
 ## [1.0.1] - 2026-09-19 (commit `7e63e51`)
 

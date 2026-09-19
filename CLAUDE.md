@@ -37,6 +37,12 @@ and isn't covered.
 ESLint (`eslint-config-expo`) and a pre-commit quality gate (`husky` +
 `lint-staged`: `eslint --fix`, the no-comments check, `tsc --noEmit`, full
 test suite) were also added alongside Phase 2 — see Coding rules below.
+Prettier was added after that (`.prettierrc.json`: single quotes, semicolons,
+trailing commas, 100 print width — chosen to match the code already
+written) with `eslint-config-prettier` disabling ESLint's conflicting
+stylistic rules; `lint-staged` runs `eslint --fix` then `prettier --write`
+on staged `*.{ts,tsx}`. `.prettierignore` excludes `*.md` and `.idea`/`.claude`
+so prose/tooling config isn't auto-reformatted.
 **Gotcha already hit once:** Node here is nvm-managed (`~/.nvm`), which
 isn't on the restricted `PATH` GUI git clients (WebStorm) use for hooks, so
 the hook originally failed with `npx: not found` when committing from the
@@ -71,7 +77,9 @@ aoe-two-companion/
 ├── app.json                 # Expo config — name/slug still default "expo-scaffold"
 ├── index.ts                 # Expo entry point (registers App)
 ├── tsconfig.json            # includes "types": ["jest"] for test globals
-├── eslint.config.js         # eslint-config-expo flat config
+├── eslint.config.js         # eslint-config-expo flat config + eslint-config-prettier
+├── .prettierrc.json         # single quotes, semi, trailing commas, printWidth 100
+├── .prettierignore          # excludes *.md, .idea, .claude, node_modules, dist
 ├── package.json             # name "aoe-two-companion", "license": "MIT", v1.0.1(+)
 ├── LICENSE                  # MIT
 ├── CLAUDE.md
@@ -185,6 +193,8 @@ npm run ios             # start targeting iOS (macOS only)
 npm test                # run the Jest test suite once
 npm run test:watch      # run Jest in watch mode (use during TDD)
 npm run lint            # ESLint (eslint-config-expo)
+npm run format          # Prettier --write .
+npm run format:check    # Prettier --check . (no writes)
 eas build --platform android   # production Android build
 eas build --platform ios       # production iOS build
 ```

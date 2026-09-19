@@ -11,11 +11,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: 'Inicio' }}
-        />
+        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Inicio' }} />
         <Tab.Screen
           name="Strategies"
           component={StrategiesScreen}

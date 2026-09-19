@@ -16,22 +16,13 @@
     "civ": "Franks",
     "strategy": "Castle Push",
     "timing": "22:00",
-    "steps": [
-      "Villagers 4 deer + forage",
-      "Avanzar rápido",
-      "Castillo temprano",
-      "Paladines"
-    ]
+    "steps": ["Villagers 4 deer + forage", "Avanzar rápido", "Castillo temprano", "Paladines"]
   },
   {
     "id": "3",
     "civ": "Aztecs",
     "strategy": "Archer Mass",
     "timing": "18:00",
-    "steps": [
-      "Flush arqueado normal",
-      "Muchos arqueadores",
-      "Upgrades armor"
-    ]
+    "steps": ["Flush arqueado normal", "Muchos arqueadores", "Upgrades armor"]
   }
 ]
